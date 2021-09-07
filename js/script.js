@@ -73,10 +73,10 @@ function addPagination(list) {
    link_list.innerHTML = ''
 
    //Loop all the pages and create and insert a link button for each page
-   for (let i = 1; i <= totalPages; i++) {
+   for (let i = 0; i <= totalPages; i++) {
       link_list.insertAdjacentHTML('beforeend', `
       <li>
-         <button type="button">${i}</button>
+         <button type="button">${i + 1}</button>
       </li>`)
    }
 
@@ -107,6 +107,72 @@ function addPagination(list) {
 
 }
 
+/**
+ * searchResults func
+ */
+
+// Create dynamically the search bar and button
+let header = document.querySelector('header')
+header.insertAdjacentHTML('beforeend',
+   `
+ <label for="search" class="student-search">
+    <span>Search by name</span>
+    <input id="search" placeholder="Search by name...">
+    <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+ </label>
+ `
+)
+
+let searchInput = document.querySelector('input#search')
+let searchButton = document.querySelector('input#search + button')
+
+
+
+function searchResults(names, searchInput) {
+
+   // Select the className and remove if is in the body the error message
+   let errorMessage = document.querySelector(".no-results");
+   if (errorMessage) {
+      errorMessage.remove();
+   }
+
+   let filteredStudents = []
+
+   for (let i = 0; i < names.length; i++) {
+      // Create a string with the full name to use includes method
+      let studentFullName = `${names[i].name.first.toLowerCase()} ${names[i].name.last.toLowerCase()}`
+
+      // Look if the search input match with some student
+      if (searchInput.value.length !== 0 && studentFullName.includes(searchInput.value.toLowerCase())) {
+         // Insert the student that match the search into a new array of student
+         filteredStudents.push(names[i])
+
+      }
+
+      // Refresh the content with the search results
+      showPage(filteredStudents, 1)
+      // Refresh the number of pages with the number of student that match the search
+      addPagination(filteredStudents)
+
+   }
+
+   // Display an error if there are not results to display for the search
+   if (filteredStudents.length === 0) {
+      if (errorMessage) {
+         errorMessage.remove();
+      }
+      errorMessage = `<h2>No results found</h2>`
+      header.insertAdjacentHTML('afterend', errorMessage);
+      linkList.innerHTML = "";
+   }
+
+}
+
 // Call functions
 showPage(data, 1)
 addPagination(data)
+searchInput.addEventListener('keyup', () => {
+   console.log(`The search is: ${searchInput.value}`)
+   searchResults(data, searchInput)
+
+})
