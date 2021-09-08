@@ -131,10 +131,11 @@ let searchButton = document.querySelector('input#search + button')
 function searchResults(names, searchInput) {
 
    // Select the className and remove if is in the body the error message
-   let errorMessage = document.querySelector(".no-results");
-   if (errorMessage) {
-      errorMessage.remove();
-   }
+   const noResultsDiv = document.createElement('div')
+   noResultsDiv.className = 'no-results'
+   const errorMessage = document.createElement('h1')
+   errorMessage.textContent = 'No results found'
+   noResultsDiv.appendChild(errorMessage)
 
    let filteredStudents = []
 
@@ -158,12 +159,17 @@ function searchResults(names, searchInput) {
 
    // Display an error if there are not results to display for the search
    if (filteredStudents.length === 0) {
-      if (errorMessage) {
-         errorMessage.remove();
+      let numDivs = document.querySelector('div.noResultsDiv')
+
+      for (let i = 0; i < numDivs; i++) {
+         numDivs.remove()
       }
-      errorMessage = `<h2>No results found</h2>`
-      header.insertAdjacentHTML('afterend', errorMessage);
-      linkList.innerHTML = "";
+      
+      let link_list = document.querySelector('.link-list')
+      link_list.innerHTML = ''
+      
+      header.insertAdjacentElement('afterend', noResultsDiv)
+
    }
 
 }
