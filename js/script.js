@@ -21,12 +21,12 @@ This function will create and insert/append the elements needed to display a "pa
  */
 function showPage(list, page) {
     //Store the number of desired pages inot a variable
-    let items_per_page = 9
+    const items_per_page = 9
     //Calculate the startIndex (always 1) and the endIndex depending of the data quantity
-    let startIndex = (page * items_per_page) - items_per_page
-    let endIndex = page * items_per_page
+    const startIndex = (page * items_per_page) - items_per_page
+    const endIndex = page * items_per_page
     //Select the ul element where the student will be insert and set its value as empty
-    let student_list = document.querySelector('.student-list')
+    const student_list = document.querySelector('.student-list')
     student_list.innerHTML = ''
 
     //Loop all the list and insert the data with its html tags and classes into student_list.
@@ -68,7 +68,7 @@ This function will create and insert/append the elements needed for the paginati
 function addPagination(list) {
 
     //Store in a number the number of pages
-    let totalPages = parseFloat(list.length / 9)
+    const totalPages = parseFloat(list.length / 9)
     //Select the ul were the buttons will be inserted and set its value as empty
     let link_list = document.querySelector('.link-list')
     link_list.innerHTML = ''
@@ -113,7 +113,7 @@ function addPagination(list) {
  */
 
 // Create dynamically the search bar and button
-let header = document.querySelector('header')
+const header = document.querySelector('header')
 header.insertAdjacentHTML('beforeend',
     `
  <label for="search" class="student-search">
@@ -124,24 +124,22 @@ header.insertAdjacentHTML('beforeend',
  `
 )
 
-let searchInput = document.querySelector('input#search')
-let searchButton = document.querySelector('input#search + button')
-
+const searchInput = document.querySelector('input#search')
+const searchButton = document.querySelector('input#search + button')
 
 function searchResults(names, searchInput) {
 
     // Select the className and remove it if is in the body the error message
     let errorMessage = document.querySelector(".no-results");
-
     if (errorMessage) {
         errorMessage.remove();
     }
 
-    let filteredStudents = []
+    const filteredStudents = []
 
     for (let i = 0; i < names.length; i++) {
         // Create a string with the full name to use includes method
-        let studentFullName = `${names[i].name.first.toLowerCase()} ${names[i].name.last.toLowerCase()}`
+        const studentFullName = `${names[i].name.first.toLowerCase()} ${names[i].name.last.toLowerCase()}`
 
         // Look if the search input match with some student
         if (searchInput.value.length !== 0 && studentFullName.includes(searchInput.value.toLowerCase())) {
@@ -160,8 +158,13 @@ function searchResults(names, searchInput) {
         errorMessage = `<h1 class="no-results">&#x1f616;  Sorry, no results found</h1>`
         header.insertAdjacentHTML("afterend", errorMessage);
 
-        let link_list = document.querySelector('.link-list')
+        // Create the link_list again (for scope purpose) and set its value as empty
+        const link_list = document.querySelector('.link-list')
         link_list.innerHTML = ''
+
+        // Create the student_list again (for scope purpose) and set its value as empty
+        const student_list = document.querySelector('.student-list')
+        student_list.innerHTML = ''
 
     }
 
@@ -177,6 +180,8 @@ function searchResults(names, searchInput) {
 // Call functions
 showPage(data, 1)
 addPagination(data)
+
+// Event listeners to search function
 searchInput.addEventListener('keyup', () => {
     searchResults(data, searchInput)
 })
