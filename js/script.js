@@ -102,7 +102,7 @@ function addPagination(list) {
         //Select the number of the page that was clicked to pass to the showPage function
         let clickedPage = parseInt(e.target.innerText)
         //Call again the showPage function, to show the page the user clicked with the respective students within
-        showPage(data, clickedPage)
+        showPage(list, clickedPage)
 
     })
 
@@ -147,13 +147,11 @@ function searchResults(names, searchInput) {
         if (searchInput.value.length !== 0 && studentFullName.includes(searchInput.value.toLowerCase())) {
             // Insert the student that match the search into a new array of student
             filteredStudents.push(names[i])
-
+            // Refresh the content with the search results
+            showPage(filteredStudents, 1)
+            // Refresh the number of pages with the number of student that match the search
+            addPagination(filteredStudents)
         }
-
-        // Refresh the content with the search results
-        showPage(filteredStudents, 1)
-        // Refresh the number of pages with the number of student that match the search
-        addPagination(filteredStudents)
 
     }
 
