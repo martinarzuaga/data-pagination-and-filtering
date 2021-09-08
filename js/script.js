@@ -14,29 +14,29 @@ Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 /**
- * The showPage function, takes data from the array of objects returning the student data, and 
+ * The showPage function, takes data from the array of objects returning the student data, and
  * insert it in the HTML.
- * @param {array} list 
- * @param {number} page 
+ * @param {array} list
+ * @param {number} page
  */
 function showPage(list, page) {
-   //Store the number of desired pages inot a variable
-   let items_per_page = 9
-   //Calculate the startIndex (always 1) and the endIndex depending of the data quantity
-   let startIndex = (page * items_per_page) - items_per_page
-   let endIndex = page * items_per_page
-   //Select the ul element where the student will be insert and set its value as empty
-   let student_list = document.querySelector('.student-list')
-   student_list.innerHTML = ''
+    //Store the number of desired pages inot a variable
+    let items_per_page = 9
+    //Calculate the startIndex (always 1) and the endIndex depending of the data quantity
+    let startIndex = (page * items_per_page) - items_per_page
+    let endIndex = page * items_per_page
+    //Select the ul element where the student will be insert and set its value as empty
+    let student_list = document.querySelector('.student-list')
+    student_list.innerHTML = ''
 
-   //Loop all the list and insert the data with its html tags and classes into student_list.
-   //This loop and the conditional within will be also prepare the data to show when the user click
-   //on another page (more about this in the function addPagination)
-   for (let i = 0; i < list.length; i++) {
+    //Loop all the list and insert the data with its html tags and classes into student_list.
+    //This loop and the conditional within will be also prepare the data to show when the user click
+    //on another page (more about this in the function addPagination)
+    for (let i = 0; i < list.length; i++) {
 
-      if (i >= startIndex && i < endIndex) {
-         //Insert adjacent before end the student_list the student data with its html tags and classes         
-         student_list.insertAdjacentHTML('beforeend', `
+        if (i >= startIndex && i < endIndex) {
+            //Insert adjacent before end the student_list the student data with its html tags and classes
+            student_list.insertAdjacentHTML('beforeend', `
          <li class="student-item cf">
             <div class="student-details">
                <img class="avatar" src="${list[i].picture.medium}" alt="Profile Picture">
@@ -47,10 +47,10 @@ function showPage(list, page) {
                <span class="date">Joined ${list[i].registered.date}</span>
             </div>
          </li>`)
-      }
+        }
 
 
-   }
+    }
 
 }
 
@@ -60,50 +60,51 @@ This function will create and insert/append the elements needed for the paginati
 */
 
 /**
- * The function addPagination will generate the pagination and pagination link buttons to show all
+ * The function addPagination will generate the pagination and link pages buttons to show all
  * pages with the respective students. Also, this add and remove the active className to the button
  * links.
- * @param {array} list 
+ * @param {array} list
  */
 function addPagination(list) {
-   //Store in a number the number of pages
-   let totalPages = parseFloat(list.length / 9)
-   //Select the ul were the buttons will be inserted and set its value as empty
-   let link_list = document.querySelector('.link-list')
-   link_list.innerHTML = ''
 
-   //Loop all the pages and create and insert a link button for each page
-   for (let i = 0; i <= totalPages; i++) {
-      link_list.insertAdjacentHTML('beforeend', `
+    //Store in a number the number of pages
+    let totalPages = parseFloat(list.length / 9)
+    //Select the ul were the buttons will be inserted and set its value as empty
+    let link_list = document.querySelector('.link-list')
+    link_list.innerHTML = ''
+
+    //Loop all the pages and create and insert a link button for each page
+    for (let i = 0; i <= totalPages; i++) {
+        link_list.insertAdjacentHTML('beforeend', `
       <li>
          <button type="button">${i + 1}</button>
       </li>`)
-   }
+    }
 
-   //Set the class of the first link button to active
-   let active_link = link_list.firstElementChild.firstElementChild
-   active_link.className = 'active'
+    //Set the class of the first link button to active
+    let active_link = link_list.firstElementChild.firstElementChild
+    active_link.className = 'active'
 
-   //Listen the clicks in the link buttons to remove and set the active class
-   link_list.addEventListener('click', (e) => {
-      //Select all link buttons created as an array
-      link_list = document.querySelectorAll('.link-list li')
+    //Listen the clicks in the link buttons to remove and set the active class
+    link_list.addEventListener('click', (e) => {
+        //Select all link buttons created as an array
+        link_list = document.querySelectorAll('.link-list li')
 
-      //Loop the array of link buttons and if anyone has the active class, remove it.
-      for (let i = 0; i < link_list.length; i++) {
-         if (link_list[i].firstElementChild.className === 'active') {
-            link_list[i].firstElementChild.classList.remove('active')
-         }
-      }
+        //Loop the array of link buttons and if anyone has the active class, remove it.
+        for (let i = 0; i < link_list.length; i++) {
+            if (link_list[i].firstElementChild.className === 'active') {
+                link_list[i].firstElementChild.classList.remove('active')
+            }
+        }
 
-      //Set the active class to the link button that was clicked
-      e.target.className = 'active'
-      //Select the number of the page that was clicked to pass to the showPage function
-      let clickedPage = parseInt(e.target.innerText)
-      //Call again the showPage function, to show the page the user clicked with the respective students within 
-      showPage(data, clickedPage)
+        //Set the active class to the link button that was clicked
+        e.target.className = 'active'
+        //Select the number of the page that was clicked to pass to the showPage function
+        let clickedPage = parseInt(e.target.innerText)
+        //Call again the showPage function, to show the page the user clicked with the respective students within
+        showPage(data, clickedPage)
 
-   })
+    })
 
 }
 
@@ -114,7 +115,7 @@ function addPagination(list) {
 // Create dynamically the search bar and button
 let header = document.querySelector('header')
 header.insertAdjacentHTML('beforeend',
-   `
+    `
  <label for="search" class="student-search">
     <span>Search by name</span>
     <input id="search" placeholder="Search by name...">
@@ -127,50 +128,51 @@ let searchInput = document.querySelector('input#search')
 let searchButton = document.querySelector('input#search + button')
 
 
-
 function searchResults(names, searchInput) {
 
-   // Select the className and remove if is in the body the error message
-   const noResultsDiv = document.createElement('div')
-   noResultsDiv.className = 'no-results'
-   const errorMessage = document.createElement('h1')
-   errorMessage.textContent = 'No results found'
-   noResultsDiv.appendChild(errorMessage)
+    // Select the className and remove it if is in the body the error message
+    let errorMessage = document.querySelector(".no-results");
 
-   let filteredStudents = []
+    if (errorMessage) {
+        errorMessage.remove();
+    }
 
-   for (let i = 0; i < names.length; i++) {
-      // Create a string with the full name to use includes method
-      let studentFullName = `${names[i].name.first.toLowerCase()} ${names[i].name.last.toLowerCase()}`
+    let filteredStudents = []
 
-      // Look if the search input match with some student
-      if (searchInput.value.length !== 0 && studentFullName.includes(searchInput.value.toLowerCase())) {
-         // Insert the student that match the search into a new array of student
-         filteredStudents.push(names[i])
+    for (let i = 0; i < names.length; i++) {
+        // Create a string with the full name to use includes method
+        let studentFullName = `${names[i].name.first.toLowerCase()} ${names[i].name.last.toLowerCase()}`
 
-      }
+        // Look if the search input match with some student
+        if (searchInput.value.length !== 0 && studentFullName.includes(searchInput.value.toLowerCase())) {
+            // Insert the student that match the search into a new array of student
+            filteredStudents.push(names[i])
 
-      // Refresh the content with the search results
-      showPage(filteredStudents, 1)
-      // Refresh the number of pages with the number of student that match the search
-      addPagination(filteredStudents)
+        }
 
-   }
+        // Refresh the content with the search results
+        showPage(filteredStudents, 1)
+        // Refresh the number of pages with the number of student that match the search
+        addPagination(filteredStudents)
 
-   // Display an error if there are not results to display for the search
-   if (filteredStudents.length === 0) {
-      let numDivs = document.querySelector('div.noResultsDiv')
+    }
 
-      for (let i = 0; i < numDivs; i++) {
-         numDivs.remove()
-      }
-      
-      let link_list = document.querySelector('.link-list')
-      link_list.innerHTML = ''
-      
-      header.insertAdjacentElement('afterend', noResultsDiv)
+    // Display an error if there are not results to display for the search
+    if (filteredStudents.length === 0) {
+        errorMessage = `<h1 class="no-results">&#x1f616;  Sorry, no results found</h1>`
+        header.insertAdjacentHTML("afterend", errorMessage);
 
-   }
+        let link_list = document.querySelector('.link-list')
+        link_list.innerHTML = ''
+
+    }
+
+    // Validate if the searchInput is empty and remove the errorMessage if is there
+    if (searchInput.value.length === 0) {
+        document.querySelector('header+h1').remove()
+        showPage(data, 1)
+        addPagination(data)
+    }
 
 }
 
@@ -178,7 +180,9 @@ function searchResults(names, searchInput) {
 showPage(data, 1)
 addPagination(data)
 searchInput.addEventListener('keyup', () => {
-   console.log(`The search is: ${searchInput.value}`)
-   searchResults(data, searchInput)
+    searchResults(data, searchInput)
+})
 
+searchButton.addEventListener('click', () => {
+    searchResults(data, searchInput)
 })
